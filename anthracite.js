@@ -1,8 +1,10 @@
 ;(function() {
+  'use strict';
+
   function A(options) {
     options = options || {};
 
-    this._serverUrl = options.serverUrl || "http://localhost:3000";
+    this._serverUrl = options.serverUrl || 'http://localhost:3000';
   }
 
   // Public methods
@@ -26,8 +28,8 @@
     var httpRequest = new XMLHttpRequest();
     var isAsynchronous = true;
 
-    httpRequest.open("POST", this._serverUrl + "/events", isAsynchronous);
-    httpRequest.setRequestHeader("Content-Type", "application/json");
+    httpRequest.open('POST', this._serverUrl + '/events', isAsynchronous);
+    httpRequest.setRequestHeader('Content-Type', 'application/json');
     httpRequest.send(aEvent.toJson());
   };
 
@@ -47,14 +49,13 @@
     return JSON.stringify({
       event: {
         kind: this.kind,
-        date_emitted: (new Date()).toISOString(),
+        clientTimestamp: (new Date()).toISOString(),
         payload: this.payload,
-        shared_secret: this.sharedSecret,
-        user_ID: this.userId,
-        user_agent: this.userAgent
+        userId: this.userId,
+        userAgent: this.userAgent
       }
     });
   };
 
   window.Anthracite = A;
-}.call(this));
+})();
